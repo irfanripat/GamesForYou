@@ -1,11 +1,12 @@
-package com.irfan.gamesapp
+package com.irfan.gamesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.irfan.gamesapp.R
 import com.irfan.gamesapp.databinding.ActivityMainBinding
-import com.irfan.gamesapp.listgames.GamesFragment
-import com.irfan.gamesapp.listgames.TYPE
+import com.irfan.gamesapp.ui.listgames.GamesFragment
+import com.irfan.gamesapp.ui.listgames.TYPE
 
 class MainActivity : AppCompatActivity() {
 

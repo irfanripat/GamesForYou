@@ -1,8 +1,8 @@
-package com.irfan.gamesapp.listgames
+package com.irfan.gamesapp.ui.listgames
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.irfan.gamesapp.model.Game
+import com.irfan.gamesapp.data.model.Game
 
 class GamesViewModel : ViewModel() {
 

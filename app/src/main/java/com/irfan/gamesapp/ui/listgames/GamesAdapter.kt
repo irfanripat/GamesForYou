@@ -1,4 +1,4 @@
-package com.irfan.gamesapp.listgames
+package com.irfan.gamesapp.ui.listgames
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.irfan.gamesapp.R
 import com.irfan.gamesapp.databinding.ItemGamesBinding
-import com.irfan.gamesapp.model.Game
+import com.irfan.gamesapp.data.model.Game
 
 class GamesAdapter(private val games: List<Game>) : RecyclerView.Adapter<ViewHolder>() {
 

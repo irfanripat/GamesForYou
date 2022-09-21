@@ -1,4 +1,4 @@
-package com.irfan.gamesapp.listgames
+package com.irfan.gamesapp.ui.listgames
 
 import android.os.Bundle
 import android.view.LayoutInflater
