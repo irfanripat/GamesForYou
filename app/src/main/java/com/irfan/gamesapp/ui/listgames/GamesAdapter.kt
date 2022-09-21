@@ -2,13 +2,15 @@ package com.irfan.gamesapp.ui.listgames
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.irfan.gamesapp.R
-import com.irfan.gamesapp.databinding.ItemGamesBinding
 import com.irfan.gamesapp.data.model.Game
+import com.irfan.gamesapp.databinding.ItemGamesBinding
 
-class GamesAdapter(private val games: List<Game>) : RecyclerView.Adapter<ViewHolder>() {
+class GamesAdapter : PagingDataAdapter<Game, ViewHolder>(GameComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -21,22 +23,31 @@ class GamesAdapter(private val games: List<Game>) : RecyclerView.Adapter<ViewHol
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(games[position])
+        getItem(position)?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = games.size
 }
 
 class ViewHolder(private val binding: ItemGamesBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(game: Game) = with(binding) {
-        tvTitle.text = game.title
+        tvTitle.text = game.name
         tvRating.text = game.rating.toString()
         tvReleaseDate.text = itemView.context.getString(
             R.string.text_release_date,
-            game.releaseDate
+            game.released
         )
         Glide.with(itemView.context)
-            .load(game.imgUrl)
+            .load(game.backgroundImage)
             .into(imgBackground)
+    }
+}
+
+object GameComparator: DiffUtil.ItemCallback<Game>() {
+    override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean {
+        return oldItem == newItem
     }
 }
