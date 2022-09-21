@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >@color/navy</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/roboto</item>
     </style>
 
     <style name="customRoundedImageView" parent="">

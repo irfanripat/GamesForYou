@@ -1,17 +1,15 @@
-package com.irfan.gamesapp.ui.listgames
+package com.irfan.gamesapp.ui.main.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.irfan.gamesapp.data.model.Game
 import com.irfan.gamesapp.data.repository.GameRepository
 import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

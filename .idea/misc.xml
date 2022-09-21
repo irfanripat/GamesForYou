@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_joystick.xml" value="0.158" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1445" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2713541666666667" />

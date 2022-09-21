@@ -1,4 +1,4 @@
-package com.irfan.gamesapp.data.response
+package com.irfan.gamesapp.data.model
 
 import com.irfan.gamesapp.data.model.Game
 
