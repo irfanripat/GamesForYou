@@ -3,11 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_grey_rounded.xml" value="0.154" />
         <entry key="app/src/main/res/drawable/ic_joystick.xml" value="0.158" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1445" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2713541666666667" />
-        <entry key="app/src/main/res/layout/fragment_games.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_games.xml" value="0.25885009765625" />
         <entry key="app/src/main/res/layout/frame_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_games.xml" value="0.24726715087890622" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2585647583007813" />

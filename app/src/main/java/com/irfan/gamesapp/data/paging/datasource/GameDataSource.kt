@@ -1,17 +1,19 @@
 package com.irfan.gamesapp.data.paging.datasource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.irfan.gamesapp.data.model.Game
 import com.irfan.gamesapp.data.service.ApiService
 
-class GameDataSource(private val apiService: ApiService) : PagingSource<Int, Game>() {
+class GameDataSource(
+    private val apiService: ApiService,
+    private val query: String = ""
+) : PagingSource<Int, Game>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Game> {
         return try {
             val nextPageNumber = params.key ?: 1
-            val response = apiService.getGames(page = nextPageNumber)
+            val response = apiService.getGames(page = nextPageNumber, query)
             val games = response.body()?.results ?: emptyList()
             LoadResult.Page(
                 data = games,

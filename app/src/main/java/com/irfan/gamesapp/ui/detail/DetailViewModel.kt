@@ -35,7 +35,7 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun checkIfFavorite(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val result = gameDB.gameDao().isFavoriteGame(id)
+        val result = repository.isFavoriteGame(id)
         _isFavorite.postValue(result)
     }
 

@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.irfan.gamesapp.databinding.FragmentGamesBinding
 import com.irfan.gamesapp.ui.detail.DetailActivity
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class GamesFragment(private val type: TYPE) : Fragment() {
@@ -41,7 +44,39 @@ class GamesFragment(private val type: TYPE) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getGames(type)
-        binding.rvGames.adapter = adapter
+        initListener()
+        observeData()
+    }
+
+    private fun initListener() = with(binding) {
+        svGames.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.getGames(type, it)
+                }
+                return true
+            }
+        })
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                progressBar.isVisible = loadStates.refresh is LoadState.Loading
+                rvGames.isVisible = loadStates.refresh is LoadState.NotLoading
+            }
+        }
+
+        rvGames.adapter = adapter
+    }
+
+    private fun observeData() {
         viewModel.games.observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch {
                 adapter.submitData(it)

@@ -2,7 +2,6 @@ package com.irfan.gamesapp.ui.detail
 
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -77,7 +76,6 @@ class DetailActivity : AppCompatActivity() {
             renderDetailMovie(it)
         }
         viewModel.isFavorite.observe(this) {
-            Log.d("DetailActivity", "isFavorite: $it")
             renderFavoriteState(it)
         }
     }
