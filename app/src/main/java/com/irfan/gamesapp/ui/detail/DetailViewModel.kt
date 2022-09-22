@@ -24,14 +24,19 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
     private val _game = MutableLiveData<Game>()
     val game: LiveData<Game> = _game
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite: LiveData<Boolean> = _isFavorite
 
     fun getDetailGame(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        _isLoading.postValue(true)
         val response = repository.getDetailGame(id)
         if (response.isSuccessful) {
             _game.postValue(response.body())
         }
+        _isLoading.postValue(false)
     }
 
     fun checkIfFavorite(id: Int) = viewModelScope.launch(Dispatchers.IO) {

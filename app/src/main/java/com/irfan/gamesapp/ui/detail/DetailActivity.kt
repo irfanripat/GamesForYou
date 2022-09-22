@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.irfan.gamesapp.R
 import com.irfan.gamesapp.data.model.Game
@@ -78,19 +79,25 @@ class DetailActivity : AppCompatActivity() {
         viewModel.isFavorite.observe(this) {
             renderFavoriteState(it)
         }
+        viewModel.isLoading.observe(this) {
+            binding.progressBar.isVisible = it
+            binding.clContainer.isVisible = !it
+        }
     }
 
     private fun renderDetailMovie(game: Game) = with(binding) {
-        tvTitle.text = game.name
-        tvRating.text = game.rating.toString()
-        tvReleaseDate.text =
-            this@DetailActivity.getString(R.string.text_release_date, game.released)
-        tvPlayTime.text = this@DetailActivity.getString(R.string.text_playtime, game.playtime)
-        tvDeveloper.text = game.developers?.getOrNull(0)?.name
-        tvDescription.text = Html.fromHtml(game.description)
-        Glide.with(this@DetailActivity)
-            .load(game.backgroundImage)
-            .into(ivBackground)
+        game.let {
+            tvTitle.text = it.name
+            tvRating.text = it.rating.toString()
+            tvReleaseDate.text = getString(R.string.text_release_date, it.released)
+            tvPlayTime.text = getString(R.string.text_playtime, it.playtime)
+            tvDeveloper.text = it.developers?.getOrNull(0)?.name
+            tvDescription.text = Html.fromHtml(it.description)
+            Glide.with(this@DetailActivity)
+                .load(it.backgroundImage)
+                .placeholder(R.drawable.img_placeholder)
+                .into(ivBackground)
+        }
     }
 
     companion object {

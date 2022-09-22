@@ -38,6 +38,7 @@
         android:layout_below="@id/appBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -126,5 +127,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

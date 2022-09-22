@@ -40,6 +40,7 @@ class GamesAdapter(
             )
             Glide.with(itemView.context)
                 .load(game.backgroundImage)
+                .placeholder(R.drawable.img_placeholder)
                 .into(imgBackground)
 
             root.setOnClickListener {
