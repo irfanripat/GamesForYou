@@ -24,7 +24,10 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         initToolbar()
         intent.extras?.getInt(EXTRA_ID)?.let {
-            viewModel.setId(it)
+            viewModel.run {
+                getDetailGame(it)
+                checkIfFavorite(it)
+            }
         }
         observeData()
     }
