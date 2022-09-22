@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
     <string name="text_release_date">Release date: %1$s</string>
+    <string name="text_playtime">%1$d played</string>
+    <string name="title_detail">Detail</string>
+    <string name="text_favorite">Favorite</string>
 </resources>

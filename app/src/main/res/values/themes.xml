@@ -15,6 +15,11 @@
         <item name="fontFamily">@font/roboto</item>
     </style>
 
+    <style name="Theme.GamesApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="customRoundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
