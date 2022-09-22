@@ -1,7 +1,6 @@
 package com.irfan.gamesapp.ui.detail
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,9 +12,7 @@ import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: GameRepository
     private val gameDB = GameDB.getDatabase(application)
@@ -24,14 +21,13 @@ class DetailViewModel(
         repository = GameRepositoryImpl(gameDB)
     }
 
-    private val _id = MutableLiveData<Int>()
     private val _game = MutableLiveData<Game>()
     val game: LiveData<Game> = _game
+
     private val _isFavorite = MutableLiveData<Boolean>()
-    val isFavorite : LiveData<Boolean> = _isFavorite
+    val isFavorite: LiveData<Boolean> = _isFavorite
 
     fun setId(id: Int) {
-        _id.value = id
         getDetailGame(id)
         checkIfFavorite(id)
     }
@@ -50,12 +46,12 @@ class DetailViewModel(
 
     private fun addToFavorite() = viewModelScope.launch(Dispatchers.IO) {
         game.value?.let { repository.addFavoriteGame(it) }
-        checkIfFavorite(_id.value!!)
+        checkIfFavorite(game.value?.id ?: 0)
     }
 
     private fun deleteFromFavorite() = viewModelScope.launch(Dispatchers.IO) {
         game.value?.id?.let { repository.deleteFavoriteGame(it) }
-        checkIfFavorite(_id.value!!)
+        checkIfFavorite(game.value?.id ?: 0)
     }
 
     fun onFavoriteClicked() {

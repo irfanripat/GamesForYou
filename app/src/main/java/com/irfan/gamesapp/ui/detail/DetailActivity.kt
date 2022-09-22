@@ -1,12 +1,12 @@
 package com.irfan.gamesapp.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.irfan.gamesapp.R
@@ -54,9 +54,11 @@ class DetailActivity : AppCompatActivity() {
 
     private fun renderFavoriteState(isFavorite: Boolean) {
         if (isFavorite) {
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled_white)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(this, R.drawable.ic_favorite_filled_white)
         } else {
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white)
         }
     }
 
@@ -89,7 +91,6 @@ class DetailActivity : AppCompatActivity() {
             .load(game.backgroundImage)
             .into(ivBackground)
     }
-
 
     companion object {
         const val EXTRA_ID = "extraId"
