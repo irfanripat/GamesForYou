@@ -56,11 +56,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/gothic_a1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivBackground"
-                tools:text="Rockstar Games" />
+                tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -68,13 +69,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
+                android:fontFamily="@font/gothic_a1_semibold"
                 android:textColor="#444444"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDeveloper"
-                tools:text="Vampire: The Masquearade - Bloodlines 2" />
+                tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/tvReleaseDate"
@@ -82,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
+                android:includeFontPadding="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle"
@@ -120,6 +123,9 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:drawablePadding="6dp"
+                android:lineSpacingExtra="2dp"
+                android:fontFamily="@font/roboto"
+                android:justificationMode="inter_word"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvRating"
                 tools:text="@tools:sample/lorem/random" />
@@ -132,6 +138,6 @@
         android:id="@+id/progressBar"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

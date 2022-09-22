@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/svGames"
@@ -10,16 +10,23 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/bg_grey_rounded"
-        app:queryHint="Search"
         app:iconifiedByDefault="false"
-        app:queryBackground="@android:color/transparent"/>
+        app:queryBackground="@android:color/transparent"
+        app:queryHint="Search" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGames"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/svGames"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_below="@id/svGames">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGames"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -27,6 +34,6 @@
         android:layout_height="45dp"
         android:layout_below="@id/svGames"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

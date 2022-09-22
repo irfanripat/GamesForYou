@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:padding="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -22,25 +23,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/gothic_a1_semibold"
         android:textColor="#444444"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgBackground"
+        app:layout_constraintTop_toTopOf="@id/imgBackground"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="8dp"
         tools:text="The last of us 5" />
 
     <TextView
         android:id="@+id/tvReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
+        android:layout_marginVertical="4dp"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/roboto"
-        android:textColor="#71787E"
-        android:textStyle="bold"
+        android:fontFamily="@font/gothic_a1"
+        android:includeFontPadding="false"
+        android:textColor="#888888"
         app:layout_constraintStart_toEndOf="@id/imgBackground"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:text="Release date: 2020-12-12" />
@@ -49,15 +51,13 @@
         android:id="@+id/tvRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
         android:layout_marginStart="8dp"
         android:drawablePadding="6dp"
-        android:textColor="#71787E"
-        android:textStyle="bold"
-        android:fontFamily="@font/roboto"
+        android:fontFamily="@font/gothic_a1"
+        android:textColor="#888888"
         app:drawableStartCompat="@drawable/ic_star"
+        app:layout_constraintBottom_toBottomOf="@id/imgBackground"
         app:layout_constraintStart_toEndOf="@id/imgBackground"
-        app:layout_constraintTop_toBottomOf="@id/tvReleaseDate"
         tools:text="4.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

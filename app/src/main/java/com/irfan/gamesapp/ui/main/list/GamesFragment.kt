@@ -73,6 +73,11 @@ class GamesFragment(private val type: TYPE) : Fragment() {
             }
         }
 
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getGames(type)
+            swipeRefresh.isRefreshing = false
+        }
+
         rvGames.adapter = adapter
     }
 
