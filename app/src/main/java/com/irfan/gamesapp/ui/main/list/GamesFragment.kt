@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import com.irfan.gamesapp.data.db.GameDB
+import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import com.irfan.gamesapp.databinding.FragmentGamesBinding
+import com.irfan.gamesapp.di.activityViewModelBuilder
 import com.irfan.gamesapp.ui.detail.DetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -20,7 +22,9 @@ class GamesFragment(private val type: TYPE) : Fragment() {
     private var _binding: FragmentGamesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: GamesViewModel by viewModels()
+    private val viewModel: GamesViewModel by activityViewModelBuilder {
+        GamesViewModel(GameRepositoryImpl(GameDB.getDatabase(requireContext()).gameDao()))
+    }
 
     private val adapter by lazy {
         GamesAdapter(

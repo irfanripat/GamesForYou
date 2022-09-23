@@ -4,19 +4,28 @@ import android.os.Bundle
 import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.irfan.gamesapp.R
+import com.irfan.gamesapp.data.db.GameDB
 import com.irfan.gamesapp.data.model.Game
+import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import com.irfan.gamesapp.databinding.ActivityDetailBinding
+import com.irfan.gamesapp.di.viewModelBuilder
 
 class DetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
-    private val viewModel: DetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModelBuilder {
+        DetailViewModel(
+            repository = GameRepositoryImpl(
+                GameDB.getDatabase(applicationContext).gameDao()
+            )
+        )
+    }
+
     private var menuItem: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

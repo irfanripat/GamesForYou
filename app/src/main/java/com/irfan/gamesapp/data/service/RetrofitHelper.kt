@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.irfan.gamesapp.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -23,11 +22,7 @@ object RetrofitHelper {
                 .url(newUrl)
                 .build()
             chain.proceed(newRequest)
-        })
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
-        .build()
+        }).build()
 
     private val gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)

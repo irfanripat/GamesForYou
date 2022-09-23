@@ -1,25 +1,15 @@
 package com.irfan.gamesapp.ui.detail
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.irfan.gamesapp.data.db.GameDB
 import com.irfan.gamesapp.data.model.Game
 import com.irfan.gamesapp.data.repository.GameRepository
-import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: GameRepository
-    private val gameDB = GameDB.getDatabase(application)
-
-    init {
-        repository = GameRepositoryImpl(gameDB)
-    }
+class DetailViewModel(private val repository: GameRepository) : ViewModel() {
 
     private val _game = MutableLiveData<Game>()
     val game: LiveData<Game> = _game
