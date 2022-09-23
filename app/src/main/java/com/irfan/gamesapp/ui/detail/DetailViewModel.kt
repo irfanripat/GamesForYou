@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.irfan.gamesapp.data.model.Game
 import com.irfan.gamesapp.data.repository.GameRepository
-import com.irfan.gamesapp.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -26,7 +25,6 @@ class DetailViewModel(private val repository: GameRepository) : ViewModel() {
         val response = repository.getDetailGame(id)
         if (response.isSuccessful) {
             _game.postValue(response.body())
-            EspressoIdlingResource.decrement()
         }
         _isLoading.postValue(false)
     }

@@ -108,6 +108,10 @@ class DetailActivity : AppCompatActivity() {
                 .load(it.backgroundImage)
                 .placeholder(R.drawable.img_placeholder)
                 .into(ivBackground)
+
+            if (!it.name.isNullOrEmpty()) {
+                EspressoIdlingResource.decrement()
+            }
         }
     }
 
