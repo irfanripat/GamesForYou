@@ -2,6 +2,7 @@ package com.irfan.gamesapp.ui.main.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import com.irfan.gamesapp.databinding.FragmentGamesBinding
 import com.irfan.gamesapp.di.activityViewModelBuilder
 import com.irfan.gamesapp.ui.detail.DetailActivity
+import com.irfan.gamesapp.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -47,6 +49,7 @@ class GamesFragment(private val type: TYPE) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        EspressoIdlingResource.increment()
         viewModel.getGames(type)
         initListener()
         observeData()
@@ -74,6 +77,9 @@ class GamesFragment(private val type: TYPE) : Fragment() {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 progressBar.isVisible = loadStates.refresh is LoadState.Loading
                 rvGames.isVisible = loadStates.refresh is LoadState.NotLoading
+                if (loadStates.refresh is LoadState.NotLoading && adapter.itemCount > 0 ||loadStates.refresh is LoadState.Error) {
+                    EspressoIdlingResource.decrement()
+                }
             }
         }
 

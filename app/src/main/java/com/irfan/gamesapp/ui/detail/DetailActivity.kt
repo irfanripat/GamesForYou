@@ -14,6 +14,7 @@ import com.irfan.gamesapp.data.model.Game
 import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import com.irfan.gamesapp.databinding.ActivityDetailBinding
 import com.irfan.gamesapp.di.viewModelBuilder
+import com.irfan.gamesapp.utils.EspressoIdlingResource
 
 class DetailActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        EspressoIdlingResource.increment()
         initToolbar()
         intent.extras?.getInt(EXTRA_ID)?.let {
             viewModel.run {
