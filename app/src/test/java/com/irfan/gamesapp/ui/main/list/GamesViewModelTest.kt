@@ -73,7 +73,7 @@ class GamesViewModelTest {
         }
 
     @Test
-    fun `test should get games from local database call when type is Favorite`() = runTest {
+    fun `test when get list of games from local DB then it should have the same data to be stored into livedata`() = runTest {
         val expected = listOf(dummyGame, dummyGame, dummyGame)
         `when`(gameRepository.getAllFavoriteGames("")).thenReturn(MutableLiveData(expected))
 
