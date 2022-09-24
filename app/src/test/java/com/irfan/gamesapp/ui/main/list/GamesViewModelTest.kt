@@ -7,10 +7,9 @@ import androidx.paging.PagingData
 import com.irfan.gamesapp.NoopListCallback
 import com.irfan.gamesapp.data.repository.GameRepository
 import com.irfan.gamesapp.dummyGame
-import com.irfan.gamesapp.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -53,43 +52,42 @@ class GamesViewModelTest {
     fun `test when get list of games from api then it should have the same data to be stored into livedata`() =
         runTest {
             val expected = listOf(dummyGame, dummyGame, dummyGame)
-            whenever(gameRepository.getAllGames("")).thenReturn(flow {
-                emit(
-                    PagingData.from(expected)
-                )
-            })
+            whenever(gameRepository.getAllGames("")).thenReturn(flowOf(PagingData.from(expected)))
 
             viewModel.getGames(TYPE.HOME, "")
-            val result = viewModel.games.getOrAwaitValue()
+            viewModel.games.observeForever {
+                val differ = AsyncPagingDataDiffer(
+                    GameComparator,
+                    NoopListCallback(),
+                    Dispatchers.Main
+                )
 
-            val differ = AsyncPagingDataDiffer(
-                GameComparator,
-                NoopListCallback(),
-                Dispatchers.Main
-            )
-
-            differ.submitData(result)
-            assertEquals(expected.size, differ.itemCount)
+                testScope.launch {
+                    differ.submitData(it)
+                    assertEquals(expected.size, differ.itemCount)
+                }
+            }
         }
 
     @Test
-    fun `test when get list of games from local DB then it should have the same data to be stored into livedata`() = runTest {
-        val expected = listOf(dummyGame, dummyGame, dummyGame)
-        `when`(gameRepository.getAllFavoriteGames("")).thenReturn(MutableLiveData(expected))
+    fun `test when get list of games from local DB then it should have the same data to be stored into livedata`() =
+        runTest {
+            val expected = listOf(dummyGame, dummyGame, dummyGame)
+            `when`(gameRepository.getAllFavoriteGames("")).thenReturn(MutableLiveData(expected))
 
-        viewModel.getGames(TYPE.FAVORITE, "")
+            viewModel.getGames(TYPE.FAVORITE, "")
 
-        viewModel.games.observeForever {
-            val differ = AsyncPagingDataDiffer(
-                GameComparator,
-                NoopListCallback(),
-                Dispatchers.Main
-            )
+            viewModel.games.observeForever {
+                val differ = AsyncPagingDataDiffer(
+                    GameComparator,
+                    NoopListCallback(),
+                    Dispatchers.Main
+                )
 
-            testScope.launch {
-                differ.submitData(it)
-                assertEquals(expected.size, differ.itemCount)
+                testScope.launch {
+                    differ.submitData(it)
+                    assertEquals(expected.size, differ.itemCount)
+                }
             }
         }
-    }
 }

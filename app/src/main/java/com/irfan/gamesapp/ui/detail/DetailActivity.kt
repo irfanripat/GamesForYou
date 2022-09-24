@@ -18,6 +18,10 @@ import com.irfan.gamesapp.utils.EspressoIdlingResource
 
 class DetailActivity : AppCompatActivity() {
 
+    init {
+        EspressoIdlingResource.increment()
+    }
+
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
     private val viewModel: DetailViewModel by viewModelBuilder {
         DetailViewModel(
@@ -32,8 +36,8 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        EspressoIdlingResource.increment()
         initToolbar()
+        EspressoIdlingResource.increment()
         intent.extras?.getInt(EXTRA_ID)?.let {
             viewModel.run {
                 getDetailGame(it)
@@ -98,7 +102,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun renderDetailMovie(game: Game) = with(binding) {
         game.let {
-            tvTitle.text = it.name
+            tvTitleDetail.text = it.name
             tvRating.text = it.rating.toString()
             tvReleaseDate.text = getString(R.string.text_release_date, it.released)
             tvPlayTime.text = getString(R.string.text_playtime, it.playtime)

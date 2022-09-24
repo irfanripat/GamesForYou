@@ -64,7 +64,7 @@
                 tools:text="@tools:sample/lorem" />
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tvTitleDetail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -87,7 +87,7 @@
                 android:includeFontPadding="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleDetail"
                 tools:text="Release date 2021-08-12" />
 
             <TextView

@@ -51,7 +51,7 @@ class MainActivityTest {
     @Test
     fun testDisplayDetailGameScreenAndClickFavoriteButton() {
         onView(withId(R.id.rvGames)).check(matches(isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-        onView(withId(R.id.tvTitle)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvTitleDetail)).check(matches(isDisplayed()))
         onView(withId(R.id.action_favorite)).perform(click())
     }
 
