@@ -19,7 +19,16 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        /** TODO :
+         * To make the api call success you need to add your own api key
+         * in the apikey.properties file
+         * or just uncomment the line below and add your api key
+         * buildConfigField("String", "API_KEY", '"YOUR_API_KEY"')
+         */
+
         buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+
     }
 
     buildTypes {
