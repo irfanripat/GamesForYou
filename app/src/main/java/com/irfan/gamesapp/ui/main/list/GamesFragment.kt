@@ -92,9 +92,7 @@ class GamesFragment(private val type: TYPE) : Fragment() {
 
     private fun observeData() {
         viewModel.games.observe(viewLifecycleOwner) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                adapter.submitData(it)
-            }
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }
 
