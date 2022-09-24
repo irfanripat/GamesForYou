@@ -6,4 +6,6 @@
     <string name="text_playtime">%1$d played</string>
     <string name="title_detail">Detail</string>
     <string name="text_favorite">Favorite</string>
+    <string name="title_home_page">Games For You</string>
+    <string name="title_favorite_game_page">Favorite Games</string>
 </resources>

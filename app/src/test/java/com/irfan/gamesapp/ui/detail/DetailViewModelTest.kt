@@ -3,14 +3,17 @@ package com.irfan.gamesapp.ui.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.irfan.gamesapp.data.repository.GameRepository
 import com.irfan.gamesapp.dummyGame
+import com.irfan.gamesapp.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -65,14 +68,17 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun `test when get detail of game from api then it should be stored in livedata`() = runTest {
-        val gameId = 1
-        Mockito.`when`(gameRepository.getDetailGame(gameId))
-            .thenReturn(Response.success(dummyGame.copy(id = gameId)))
-        viewModel.getDetailGame(gameId)
+    fun `test when get detail of game from api then it should be stored in livedata`() =
+        testScope.runTest {
+            val gameId = 1
+            Mockito.`when`(gameRepository.getDetailGame(gameId))
+                .thenReturn(Response.success(dummyGame.copy(id = gameId)))
 
-        viewModel.game.observeForever {
-            assert(it.id == gameId)
+            viewModel.getDetailGame(gameId)
+            advanceUntilIdle()
+            val result = viewModel.game.getOrAwaitValue()
+
+            assertEquals(result.id, gameId)
+            assertEquals(result.name, dummyGame.name)
         }
-    }
 }

@@ -28,8 +28,8 @@ class GameRepositoryImpl(private val dao: GameDao) : GameRepository {
         return RetrofitHelper.apiService.getDetailGame(id)
     }
 
-    override suspend fun getAllFavoriteGames(query: String): LiveData<List<Game>> {
-        return dao.getGames(query)
+    override fun getAllFavoriteGames(query: String): LiveData<List<Game>> {
+        return dao.getFavoriteGames(query)
     }
 
     override suspend fun addFavoriteGame(game: Game) {

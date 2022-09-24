@@ -1,12 +1,12 @@
 package com.irfan.gamesapp.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.irfan.gamesapp.R
 import com.irfan.gamesapp.databinding.ActivityMainBinding
-import com.irfan.gamesapp.ui.main.list.GamesFragment
-import com.irfan.gamesapp.ui.main.list.TYPE
+import com.irfan.gamesapp.ui.main.favorite.FavoriteGamesFragment
+import com.irfan.gamesapp.ui.main.home.GamesFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,16 +18,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setCurrentFragment(GamesFragment(TYPE.HOME))
+        setCurrentFragment(GamesFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-                    setCurrentFragment(GamesFragment(TYPE.HOME))
-                    supportActionBar?.title = "Games For You"
+                    setCurrentFragment(GamesFragment())
+                    supportActionBar?.title = getString(R.string.title_home_page)
                 }
                 R.id.favorite -> {
-                    setCurrentFragment(GamesFragment(TYPE.FAVORITE))
-                    supportActionBar?.title = "Favorite Games"
+                    setCurrentFragment(FavoriteGamesFragment())
+                    supportActionBar?.title = getString(R.string.title_favorite_game_page)
                 }
             }
             true

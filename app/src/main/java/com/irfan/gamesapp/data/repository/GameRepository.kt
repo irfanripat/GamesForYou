@@ -12,7 +12,7 @@ interface GameRepository {
 
     suspend fun getDetailGame(id: Int) : Response<Game>
 
-    suspend fun getAllFavoriteGames(query: String) : LiveData<List<Game>>
+    fun getAllFavoriteGames(query: String) : LiveData<List<Game>>
 
     suspend fun addFavoriteGame(game: Game)
 

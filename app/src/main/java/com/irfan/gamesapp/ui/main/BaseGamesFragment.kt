@@ -1,4 +1,4 @@
-package com.irfan.gamesapp.ui.main.list
+package com.irfan.gamesapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,23 +9,22 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import com.irfan.gamesapp.data.db.GameDB
-import com.irfan.gamesapp.data.repository.GameRepositoryImpl
 import com.irfan.gamesapp.databinding.FragmentGamesBinding
-import com.irfan.gamesapp.di.activityViewModelBuilder
 import com.irfan.gamesapp.ui.detail.DetailActivity
 import com.irfan.gamesapp.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class GamesFragment(private val type: TYPE) : Fragment() {
+abstract class BaseGamesFragment : Fragment() {
 
     private var _binding: FragmentGamesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: GamesViewModel by activityViewModelBuilder {
-        GamesViewModel(GameRepositoryImpl(GameDB.getDatabase(requireContext()).gameDao()))
+    val viewModel: BaseGamesViewModel by lazy {
+        initViewModel()
     }
+
+    abstract fun initViewModel(): BaseGamesViewModel
 
     private val adapter by lazy {
         GamesAdapter(
@@ -49,7 +48,7 @@ class GamesFragment(private val type: TYPE) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         EspressoIdlingResource.increment()
-        viewModel.getGames(type)
+        viewModel.getListOfGame()
         initListener()
         observeData()
     }
@@ -66,7 +65,7 @@ class GamesFragment(private val type: TYPE) : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
-                    viewModel.getGames(type, it)
+                    viewModel.getListOfGame(it)
                 }
                 return true
             }
@@ -76,14 +75,14 @@ class GamesFragment(private val type: TYPE) : Fragment() {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 progressBar.isVisible = loadStates.refresh is LoadState.Loading
                 rvGames.isVisible = loadStates.refresh is LoadState.NotLoading
-                if (loadStates.refresh is LoadState.NotLoading && adapter.itemCount > 0 ||loadStates.refresh is LoadState.Error) {
+                if (loadStates.refresh is LoadState.NotLoading && adapter.itemCount > 0 || loadStates.refresh is LoadState.Error) {
                     EspressoIdlingResource.decrement()
                 }
             }
         }
 
         swipeRefresh.setOnRefreshListener {
-            viewModel.getGames(type)
+            viewModel.getListOfGame()
             swipeRefresh.isRefreshing = false
         }
 
@@ -91,7 +90,7 @@ class GamesFragment(private val type: TYPE) : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.games.observe(viewLifecycleOwner) {
+        viewModel.getGames().observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }
@@ -100,8 +99,4 @@ class GamesFragment(private val type: TYPE) : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
-
-enum class TYPE {
-    HOME, FAVORITE
 }

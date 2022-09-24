@@ -72,7 +72,7 @@ class GameDBTest : TestCase() {
         dao.insertGame(game2)
         dao.insertGame(game3)
 
-        val result = dao.getGames("").getOrAwaitValue()
+        val result = dao.getFavoriteGames("").getOrAwaitValue()
         assertThat(result.size, `is`(3))
     }
 }

@@ -17,7 +17,7 @@ interface GameDao {
     suspend fun deleteGameWithId(id: Int)
 
     @Query("SELECT * FROM games where name LIKE '%' || :searchQuery || '%'")
-    fun getGames(searchQuery: String): LiveData<List<Game>>
+    fun getFavoriteGames(searchQuery: String): LiveData<List<Game>>
 
     @Query("SELECT EXISTS(SELECT * FROM games WHERE id = :id)")
     fun isFavoriteGame(id: Int): Boolean

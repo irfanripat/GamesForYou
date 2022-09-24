@@ -1,4 +1,4 @@
-package com.irfan.gamesapp.ui.main.list
+package com.irfan.gamesapp.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

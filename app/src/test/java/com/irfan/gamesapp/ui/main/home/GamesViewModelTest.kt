@@ -1,4 +1,4 @@
-package com.irfan.gamesapp.ui.main.list
+package com.irfan.gamesapp.ui.main.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
@@ -7,17 +7,21 @@ import androidx.paging.PagingData
 import com.irfan.gamesapp.NoopListCallback
 import com.irfan.gamesapp.data.repository.GameRepository
 import com.irfan.gamesapp.dummyGame
+import com.irfan.gamesapp.getOrAwaitValue
+import com.irfan.gamesapp.ui.main.BaseGamesViewModel
+import com.irfan.gamesapp.ui.main.GameComparator
+import com.irfan.gamesapp.ui.main.favorite.FavoriteGamesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,10 +37,12 @@ class GamesViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     private val gameRepository = mock(GameRepository::class.java)
-    private val viewModel = GamesViewModel(gameRepository)
+    private lateinit var viewModel: BaseGamesViewModel
 
     private val testScope = TestScope()
     private val testDispatcher = StandardTestDispatcher(testScope.testScheduler)
+
+    private val dummyList = listOf(dummyGame, dummyGame, dummyGame)
 
     @Before
     fun setUp() {
@@ -50,44 +56,40 @@ class GamesViewModelTest {
 
     @Test
     fun `test when get list of games from api then it should have the same data to be stored into livedata`() =
-        runTest {
-            val expected = listOf(dummyGame, dummyGame, dummyGame)
-            whenever(gameRepository.getAllGames("")).thenReturn(flowOf(PagingData.from(expected)))
+        testScope.runTest {
+            viewModel = GamesViewModel(gameRepository)
+            whenever(gameRepository.getAllGames("")).thenReturn(flowOf(PagingData.from(dummyList)))
 
-            viewModel.getGames(TYPE.HOME, "")
-            viewModel.games.observeForever {
-                val differ = AsyncPagingDataDiffer(
-                    GameComparator,
-                    NoopListCallback(),
-                    Dispatchers.Main
-                )
+            viewModel.getListOfGame("")
+            advanceUntilIdle()
 
-                testScope.launch {
-                    differ.submitData(it)
-                    assertEquals(expected.size, differ.itemCount)
-                }
-            }
+            val differ = AsyncPagingDataDiffer(
+                GameComparator,
+                NoopListCallback(),
+                Dispatchers.Main
+            )
+            differ.submitData(viewModel.getGames().getOrAwaitValue())
+            advanceUntilIdle()
+            assertTrue(dummyList.size == differ.itemCount)
+
         }
 
     @Test
     fun `test when get list of games from local DB then it should have the same data to be stored into livedata`() =
-        runTest {
-            val expected = listOf(dummyGame, dummyGame, dummyGame)
-            `when`(gameRepository.getAllFavoriteGames("")).thenReturn(MutableLiveData(expected))
+        testScope.runTest {
+            viewModel = FavoriteGamesViewModel(gameRepository)
+            `when`(gameRepository.getAllFavoriteGames("")).thenReturn(MutableLiveData(dummyList))
 
-            viewModel.getGames(TYPE.FAVORITE, "")
+            viewModel.getListOfGame("")
+            advanceUntilIdle()
+            val differ = AsyncPagingDataDiffer(
+                GameComparator,
+                NoopListCallback(),
+                Dispatchers.Main
+            )
 
-            viewModel.games.observeForever {
-                val differ = AsyncPagingDataDiffer(
-                    GameComparator,
-                    NoopListCallback(),
-                    Dispatchers.Main
-                )
-
-                testScope.launch {
-                    differ.submitData(it)
-                    assertEquals(expected.size, differ.itemCount)
-                }
-            }
+            differ.submitData(viewModel.getGames().getOrAwaitValue())
+            advanceUntilIdle()
+            assertTrue(dummyList.size == differ.itemCount)
         }
 }
